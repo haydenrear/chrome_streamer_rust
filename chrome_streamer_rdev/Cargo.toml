@@ -1,0 +1,100 @@
+[package]
+name = "chrome_streamer_rdev"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rdev = { version = "0.5.3" , features = ["serde", "serialize"]}
+paste = "1.0.12"
+serde = "1.0.137"
+serde_json = "1.0.108"
+kafka-data-subscriber = { path = "../../kafka-data-subscriber" }
+enum-fields = "0.1.0"
+tokio = {version = "1.28.0", features = ["full"] }
+rdkafka = "0.34.0"
+log = "0.4.20"
+lazy_static = "1.4.0"
+knockoff_tokio_util = {path= "../../rust-spring-knockoff/knockoff_tokio_util"}
+futures = "0.3.29"
+
+[dependencies.module_macro]
+path ="../target/module_macro"
+version = "0.1.5"
+registry = "estuary"
+[dependencies.knockoff_logging]
+path ="../target/knockoff_logging"
+version = "0.1.5"
+registry = "estuary"
+[dependencies.knockoff_helper]
+path ="../target/knockoff_helper"
+version = "0.1.5"
+registry = "estuary"
+[dependencies.codegen_utils]
+path ="../target/codegen_utils"
+version = "0.1.5"
+registry = "estuary"
+[dependencies.configuration_properties_macro]
+path ="../target/configuration_properties_macro"
+version = "0.1.5"
+registry = "estuary"
+[dependencies.module_macro_lib]
+path ="../target/module_macro_lib"
+version = "0.1.5"
+registry = "estuary"
+[dependencies.module_macro_shared]
+path ="../target/module_macro_shared"
+version = "0.1.5"
+registry = "estuary"
+[dependencies.spring_knockoff_boot_macro]
+path ="../target/spring_knockoff_boot_macro"
+version = "0.1.5"
+registry = "estuary"
+[dependencies.web_framework]
+path ="../target/web_framework"
+version = "0.1.5"
+registry = "estuary"
+[dependencies.web_framework_shared]
+path ="../target/web_framework_shared"
+version = "0.1.5"
+registry = "estuary"
+[dependencies.knockoff_security]
+path ="../target/knockoff_security"
+version = "0.1.5"
+registry = "estuary"
+
+[build-dependencies]
+syn = {version = "1.0", features = ["full"]}
+paste = "1.0.12"
+
+[build-dependencies.crate_gen]
+path ="../target/crate_gen"
+version = "0.1.5"
+registry = "estuary"
+[build-dependencies.web_framework]
+path ="../target/web_framework"
+version = "0.1.5"
+registry = "estuary"
+[build-dependencies.spring_knockoff_boot_macro]
+path ="../target/spring_knockoff_boot_macro"
+version = "0.1.5"
+registry = "estuary"
+[build-dependencies.build_lib]
+path ="../target/build_lib"
+version = "0.1.5"
+registry = "estuary"
+[build-dependencies.module_macro_codegen]
+path ="../target/module_macro_codegen"
+version = "0.1.5"
+registry = "estuary"
+[build-dependencies.module_macro_shared]
+path = "../target/module_macro_shared"
+version = "0.1.5"
+registry = "estuary"
+[build-dependencies.module_macro_lib]
+version = "0.1.5"
+registry = "estuary"
+path = "../target/module_macro_lib"
+[build-dependencies.codegen_utils]
+version = "0.1.5"
+registry = "estuary"
+path = "../target/codegen_utils"

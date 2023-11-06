@@ -1,4 +1,33 @@
 [workspace]
 members = [
-    "chrome_streamer_be"
+    "chrome_streamer_rdev_filter",
+    "chrome_streamer_rdev",
+]
+exclude = [
+    "target/knockoff_providers_gen",
+    "target/module_macro",
+    "target/module_macro_lib",
+    "target/configuration_properties_macro",
+    "target/codegen_utils",
+    "target/knockoff_helper",
+    "target/knockoff_logging",
+    "target/wait_for",
+    "target/string_utils",
+    "target/knockoff_env",
+    "target/knockoff_resource",
+    "target/web_framework_shared",
+    "target/knockoff_security",
+    "target/data_framework",
+    "target/module_macro_shared",
+    "target/collection_util",
+    "target/module_macro_codegen",
+    "target/factories_codegen",
+    "target/crate_gen",
+    "target/spring_knockoff_boot_macro",
+    "target/set_enum_fields",
+    "target/web_framework",
+    "target/authentication_gen",
+    "target/build_lib",
+    "target/module_precompile",
+    "target/mongo_repo",
 ]

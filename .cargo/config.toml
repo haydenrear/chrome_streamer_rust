@@ -1,0 +1,17 @@
+[env]
+LOGGING_DIR = "/Users/hayde/IdeaProjects/chrome_streamer_rust/log_out"
+PROJECT_BASE_DIRECTORY = "/Users/hayde/IdeaProjects/chrome_streamer_rust"
+MODULE_MACRO_REGISTRY_INDEX_URI = "http://localhost:1234/git/index"
+KNOCKOFF_DEV = "true"
+CONFIG_PROPS = "/Users/hayde/IdeaProjects/chrome_streamer_rust/resources/kafka.toml"
+
+[registries]
+estuary = { index = "http://localhost:1234/git/index" }
+
+[kafka]
+hosts = ["localhost:9093"]
+consumer_group_id = "nn-fe"
+client_id = "nn-fe"
+
+
+

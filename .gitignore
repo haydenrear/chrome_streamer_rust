@@ -1,1 +1,3 @@
 target/*
+default_log
+log_out
