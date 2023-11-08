@@ -19,21 +19,26 @@ use std::sync::Arc;
 
 use knockoff_logging::*;
 use kafka_data_subscriber::NetworkEvent;
+use std::sync::Mutex;
 
 import_logger_root!("main.rs", concat!(project_directory!(), "/log_out/chrome_streamer_rdev_filter.log"));
 
 
-include!(concat!(env!("OUT_DIR"), "/spring-knockoff.rs"));
+// include!(concat!(env!("OUT_DIR"), "/spring-knockoff.rs"));
 
 use module_macro::module_attr;
 
-#[module_attr]
-#[cfg(springknockoff)]
+// #[module_attr]
+// #[cfg(springknockoff)]
 pub mod chrome_streamer_rdev_filter {
-
+    mod video_filter;
+    mod kafka_actions_consumer;
+    pub use kafka_actions_consumer::*;
 }
 
+use chrome_streamer_rdev_filter::*;
 
-pub fn main() {
-
+#[tokio::main]
+pub async fn main() {
+    KafkaActionsConsumer::start().await;
 }

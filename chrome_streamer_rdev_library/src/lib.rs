@@ -2,9 +2,7 @@ use enum_fields::EnumFields;
 use kafka_data_subscriber::NetworkEvent;
 use rdev::{Event, EventType};
 use serde::{Deserialize, Serialize};
-use spring_knockoff_boot_macro::knockoff_ignore;
 
-#[knockoff_ignore]
 #[derive(Serialize, Deserialize, Debug)]
 pub enum InputMonitoringEvent {
     ButtonPress { event: EventType },
@@ -15,7 +13,6 @@ pub enum InputMonitoringEvent {
     KeyRelease {event: EventType},
 }
 
-#[knockoff_ignore]
 impl NetworkEvent for InputMonitoringEvent {
     fn topic_matcher() -> &'static str {
         "input_monitoring*"
@@ -26,7 +23,6 @@ impl NetworkEvent for InputMonitoringEvent {
     }
 }
 
-#[knockoff_ignore]
 impl InputMonitoringEvent {
     pub(crate) fn new_event(event: Event) -> Self {
         match event.event_type {

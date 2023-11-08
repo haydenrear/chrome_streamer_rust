@@ -12,7 +12,7 @@ use rdkafka::util::TokioRuntime;
 
 use spring_knockoff_boot_macro::prototype;
 
-use crate::chrome_streamer_rdev_macro::rdev_network_event::InputMonitoringEvent;
+use chrome_streamer_rdev_library::InputMonitoringEvent;
 use std::sync::{Arc, Mutex};
 use std::sync::mpsc::SendError;
 use knockoff_logging::*;

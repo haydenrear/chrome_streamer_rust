@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/chrome_streamer_be/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/chrome_streamer_rdev/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/chrome_streamer_rdev_filter/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/chrome_streamer_rdev_library/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/chrome_streamer_rdev/target" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
       <excludeFolder url="file://$MODULE_DIR$/chrome_streamer_be/target" />

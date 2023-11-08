@@ -2,6 +2,7 @@
 members = [
     "chrome_streamer_rdev_filter",
     "chrome_streamer_rdev",
+    "chrome_streamer_rdev_library"
 ]
 exclude = [
     "target/knockoff_providers_gen",

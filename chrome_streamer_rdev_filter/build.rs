@@ -4,6 +4,7 @@ use std::fs::File;
 use std::io::{Read, Write};
 use std::ops::Deref;
 use std::path::Path;
+use std::process::Command;
 use std::ptr::write;
 use syn::__private::{Span, ToTokens};
 use syn::{braced, Fields, Ident, Item, ItemMod, ItemStruct, Token, token, Visibility, VisPublic};
@@ -16,8 +17,10 @@ use codegen_utils::project_directory;
 use crate_gen::CrateWriter;
 
 fn main() {
-    replace_modules(
-        Some(get_build_project_dir("chrome_streamer_rdev_filter/src").as_str()),
-        vec![get_project_base_build_dir().as_str()]
-    );
+    // replace_modules(
+    //     Some(get_build_project_dir("chrome_streamer_rdev_filter/src").as_str()),
+    //     vec![get_project_base_build_dir().as_str()]
+    // );
+    // let _ = Command::new("brew install pkg-config libavutil libavcodec libavformat libswscale libswresample libavdevice freetype")
+    //     .spawn();
 }

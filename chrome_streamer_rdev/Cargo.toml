@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+chrome_streamer_rdev_library = {path = "../chrome_streamer_rdev_library"}
 rdev = { version = "0.5.3" , features = ["serde", "serialize"]}
 paste = "1.0.12"
 serde = "1.0.137"
