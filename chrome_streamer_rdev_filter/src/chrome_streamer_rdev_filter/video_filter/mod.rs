@@ -171,5 +171,8 @@ fn test_get_frames() {
     let webm_file = File::open(&web_video_processed).unwrap();
     assert_ne!(webm_file.metadata().as_ref().unwrap().len(), 0);
 
-    std::fs::remove_file(&web_video_processed);
+    let _ = std::fs::remove_file(&web_video_processed)
+        .map_err(|e| {
+            error!("Error attempting to remove processed webm.")
+        });
 }
