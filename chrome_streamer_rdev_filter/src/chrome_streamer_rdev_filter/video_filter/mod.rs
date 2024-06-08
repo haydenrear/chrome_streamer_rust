@@ -12,29 +12,29 @@ use rdev::{Event, ListenError};
 use knockoff_logging::*;
 use kafka_data_subscriber::NetworkEvent;
 use lazy_static::lazy_static;
-use video_rs::{Decoder, Encoder, Error, Frame, Locator, Options, PixelFormat, Settings, Time};
-import_logger_root!("test.rs", concat!(project_directory!(), "/log_out/video_filter_test.log"));
+use video_rs::{Decoder, Encoder, Error, Frame, Location, Options, Reader, Time};
+use video_rs::frame::PixelFormat;
+use video_rs::encode::Settings;
 
+import_logger_root!("test.rs", concat!(project_directory!(), "/log_out/video_filter_test.log"));
 
 pub struct VideoFrameFilterConfigurationProperties {
     frame_window_size: usize,
-    filetype: String
+    filetype: String,
 }
 
 pub struct VideoFrameFilter {
-    video_frame_filter_config: VideoFrameFilterConfigurationProperties
+    video_frame_filter_config: VideoFrameFilterConfigurationProperties,
 }
 
 impl VideoFrameFilter {
-
     pub fn new(video_frame_filter_config: VideoFrameFilterConfigurationProperties) -> Self {
-        Self {video_frame_filter_config}
+        Self { video_frame_filter_config }
     }
 
     pub fn filter_video(&self, timestamps: Vec<i64>, location: PathBuf) {
-        let mut out_file = self.get_out_file(&location);
-
-        Decoder::new(&Locator::Path(location.clone()))
+        let out_file = self.get_out_file(&location);
+        Decoder::new(location.clone())
             .map_err(|e| {
                 error!("Error decoding video {:?} with error {:?}", &location, &e);
             })
@@ -43,14 +43,14 @@ impl VideoFrameFilter {
                 let (w, h) = decoded.size();
                 let mut encoder = Encoder::new(
                     &out_file,
-                    Settings::for_h264_custom(w as usize, h as usize,
-                                              PixelFormat::YUV420P,
-                                              Options::new_from_hashmap(
-                                                  &HashMap::from([
-                                                      ("c:v".to_string(), "libvpx-vp9".to_string()),
-                                                      ("b:v".to_string(), "1000000".to_string()),
-                                                      ("crf".to_string(), "20".to_string())
-                                                  ])),
+                    Settings::preset_h264_custom(w as usize, h as usize,
+                                                 PixelFormat::YUV420P,
+                                                 Options::from(
+                                                     HashMap::from([
+                                                         ("c:v".to_string(), "libvpx-vp9".to_string()),
+                                                         ("b:v".to_string(), "1000000".to_string()),
+                                                         ("crf".to_string(), "20".to_string())
+                                                     ])),
                     ))
                     .map_err(|e| {
                         error!("Error creating encoder: {:?}.", &e);
@@ -77,8 +77,8 @@ impl VideoFrameFilter {
 
                 for item in decoded.decode_iter() {
                     if item.is_ok() {
-                        info!("Doing next: {:?}", &first);
                         if !Self::encode_frame(&location, &mut encoder, first, item.unwrap()) {
+                            info!("Doing next: {:?}", &first);
                             if milliseconds.len() == 0 {
                                 error!("Finished encoding.");
                                 break;
@@ -104,7 +104,7 @@ impl VideoFrameFilter {
         let next_millis = (time_float * 1000.0);
         /// Skip millis in between millis specified.
         if first.filter(|first_value| (**first_value as f64) <= next_millis).is_some() {
-            if let Ok(_) = encoder.encode(&f, t)
+            if let Ok(_) = encoder.encode(&f, *t)
                 .map_err(|e| {
                     error!("Error writing output frame for {:?}, timestamp {:?}: {:?}", &location, &item.0, &e);
                 }) {
@@ -117,7 +117,7 @@ impl VideoFrameFilter {
         }
     }
 
-    fn get_out_file(&self, location: &PathBuf) -> Locator {
+    fn get_out_file(&self, location: &PathBuf) -> Location {
         let new_filename = self.get_filename(&location);
         let out_file = location.as_path().parent()
             .map(|out| out.join(new_filename))
@@ -126,7 +126,7 @@ impl VideoFrameFilter {
                 Some(location.clone())
             })
             .unwrap();
-        Locator::Path(out_file)
+        Location::from(out_file)
     }
 
     fn get_filename(&self, location: &PathBuf) -> String {
@@ -150,12 +150,16 @@ fn test_get_frames() {
     let web_video = knockoff_helper::get_project_path("chrome_streamer_rdev_filter")
         .join("test_resources")
         .join("input.webm");
+
     assert!(web_video.exists(), "{:?} did not exist", &web_video);
+
     let video_frame_processor = VideoFrameFilter::new(VideoFrameFilterConfigurationProperties {
         frame_window_size: 10,
         filetype: "webm".to_string(),
     });
+
     let mut out = vec![];
+
     for i in 0..100 {
         if i % 5 == 0 {
             out.push((i * 1000));
@@ -166,13 +170,14 @@ fn test_get_frames() {
     let web_video_processed = knockoff_helper::get_project_path("chrome_streamer_rdev_filter")
         .join("test_resources")
         .join("input_processed.webm");
+
     assert!(web_video_processed.exists(), "Processed video did not exist");
 
     let webm_file = File::open(&web_video_processed).unwrap();
     assert_ne!(webm_file.metadata().as_ref().unwrap().len(), 0);
 
-    let _ = std::fs::remove_file(&web_video_processed)
-        .map_err(|e| {
-            error!("Error attempting to remove processed webm.")
+    let e = std::fs::remove_file(&web_video_processed)
+        .map_err(|m| {
+            error!("{}", m);
         });
 }

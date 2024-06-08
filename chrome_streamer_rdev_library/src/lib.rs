@@ -1,3 +1,4 @@
+use std::path::Path;
 use std::time::{SystemTime, UNIX_EPOCH};
 use enum_fields::EnumFields;
 use kafka_data_subscriber::NetworkEvent;
@@ -34,7 +35,7 @@ pub enum InputMonitoringEvent {
 
 type StreamId = String;
 
-#[derive(Serialize, Deserialize, Debug, EnumFields)]
+#[derive(Serialize, Deserialize, Debug)]
 pub enum StreamChangeEvent {
     StreamFinished{
 
@@ -54,7 +55,7 @@ impl NetworkEvent for InputMonitoringEvent {
 }
 
 impl InputMonitoringEvent {
-    pub(crate) fn new_event(event: Event) -> Self {
+    pub fn new_event(event: Event) -> Self {
         let mut now = SystemTime::now();
         let epoch_milli = now.duration_since(UNIX_EPOCH).unwrap().as_millis();
         match event.event_type {

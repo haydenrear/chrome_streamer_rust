@@ -31,11 +31,10 @@ use module_macro::module_attr;
 pub mod chrome_streamer_rdev_macro {
     pub mod rdev_listener;
     pub use rdev_listener::*;
-
 }
 
 pub use chrome_streamer_rdev_macro::*;
-
+use chrome_streamer_rdev_library::InputMonitoringEvent;
 
 #[tokio::main]
 async fn main() {
