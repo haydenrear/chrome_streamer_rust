@@ -7,3 +7,5 @@ When the machine learning algorithm predicts the next step, it will predict a js
 Then, the machine learning algorithm will input the set of pictures (like a video context, along with the previous actions), and it will predict the next action. This can use a multimodal modal and fine tune to accept the pictures and the actions as text. 
 
 The screen controller will be an interpolation to locations when a click happens, it will say to click somewhere, and the controller will simply move from this location to that. No need to spend the time learning how to move there at first. Predict the actions instead.
+
+Not for user for illegal!!! Was for AI but no time
